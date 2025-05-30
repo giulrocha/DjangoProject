@@ -12,4 +12,9 @@ urlpatterns = [
     path('categoria/new/', views.categoria_create, name='categoria_create'),
     path('categoria/edit/<int:pk>/', views.categoria_update, name='categoria_update'),
     path('categoria/delete/<int:pk>/', views.categoria_delete, name='categoria_delete'),
+    ##editora
+    path('editora/', views.editora_list, name='editora_list'),
+    path('editora/new/', views.editora_create, name='editora_create'),
+    path('editora/edit/<int:pk>/', views.editora_update, name='editora_update'),
+    path('editora/delete/<int:pk>/', views.editora_delete, name='editora_delete'),
 ]

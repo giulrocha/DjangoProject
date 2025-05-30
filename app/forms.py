@@ -1,5 +1,5 @@
 from django import forms
-from .models import Item, Categoria
+from .models import Item, Categoria, Editora
 
 class ItemForm(forms.ModelForm):
     class Meta:
@@ -9,4 +9,10 @@ class ItemForm(forms.ModelForm):
 class CategoriaForm(forms.ModelForm):
     class Meta:
         model = Categoria
+        fields = ['name']
+
+
+class EditoraForm(forms.ModelForm):
+    class Meta:
+        model = Editora
         fields = ['name']

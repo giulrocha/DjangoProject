@@ -5,7 +5,7 @@ class Item(models.Model):
     description = models.TextField(blank=True)
     categoria = models.ForeignKey('Categoria', on_delete=models.CASCADE)
     #autor = models.ForeignKey('Autor', on_delete=models.CASCADE)
-    #editora = models.ForeignKey('Editora', on_delete=models.CASCADE)
+    editora = models.ForeignKey('Editora', on_delete=models.CASCADE)
 
 
 
@@ -14,6 +14,12 @@ class Item(models.Model):
 
 
 class Categoria(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+class Editora(models.Model):
     name = models.CharField(max_length=100)
 
     def __str__(self):
