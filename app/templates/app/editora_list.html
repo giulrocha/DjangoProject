@@ -5,7 +5,7 @@
 <ul>
   {% for editora in editoras %}
   <li>
-    {{ editora.name }} - <a href="{% url 'editora_update' item.pk %}">Edit</a> -
+    {{ editora.name }} - <a href="{% url 'editora_update' editora.pk %}">Edit</a> -
     <a href="{% url 'editora_delete' editora.pk %}">Delete</a>
   </li>
   {% endfor %}
