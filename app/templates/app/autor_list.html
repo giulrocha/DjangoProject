@@ -1,0 +1,13 @@
+<!-- Esse 'header' improvisado leva à página principal de cada modelo (onde poderemos fazer Crud)-->
+<span><a href="/">Itens       </a></span><span><a href="/categoria">Categorias       </a></span><span><a href="/autor">Autores       </a></span><span><a href="/editora">Editoras       </a></span>
+<br>
+<h1>Autor</h1>
+<ul>
+  {% for autor in autores %}
+  <li>
+    {{ autor.name }} - <a href="{% url 'autor_update' autor.pk %}">Edit</a> -
+    <a href="{% url 'autor_delete' autor.pk %}">Delete</a>
+  </li>
+  {% endfor %}
+</ul>
+<a href="{% url 'autor_create' %}">New Autor</a>

@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Item, Categoria, Editora
-from .forms import ItemForm, CategoriaForm, EditoraForm
+from .models import Item, Categoria, Autor, Editora
+from .forms import ItemForm, CategoriaForm, AutorForm, EditoraForm
+
 
 ##ITEM
 
@@ -37,6 +38,8 @@ def item_delete(request, pk):
     return render(request, 'app/item_confirm_delete.html', {'item': item})
 
 
+
+
 ## Categoria [feature/thiago]
 
 def categoria_list(request):
@@ -71,6 +74,39 @@ def categoria_delete(request, pk):
         return redirect('categoria_list')
     return render(request, 'app/categoria_confirm_delete.html', {'categoria': categoria})
 
+## Autor
+
+def autor_list(request):
+    autores = Autor.objects.all()
+    return render(request, 'app/autor_list.html', {'autores': autores})
+
+def autor_create(request):
+    if request.method == 'POST':
+        form = AutorForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('autor_list')
+    else:
+        form = AutorForm()
+    return render(request, 'app/autor_form.html', {'form': form})
+
+def autor_update(request, pk):
+    autor = get_object_or_404(Autor, pk=pk)
+    if request.method == 'POST':
+        form = AutorForm(request.POST, instance=autor)
+        if form.is_valid():
+            form.save()
+            return redirect('autor_list')
+    else:
+        form = AutorForm(instance=autor)
+    return render(request, 'app/autor_form.html', {'form': form})
+
+def autor_delete(request, pk):
+    autor = get_object_or_404(Autor, pk=pk)
+    if request.method == 'POST':
+        Autor.delete()
+        return redirect('autor_list')
+    return render(request, 'app/autor_confirm_delete.html', {'autor': autor})
 
 ## Editora [feature/andre]
 
