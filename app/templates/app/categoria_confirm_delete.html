@@ -1,0 +1,1 @@
+<h1>Confirm Delete</h1><form method="post">{% csrf_token %}<p>Delete '{{ categoria }}'?</p><button type="submit">Yes</button><a href="{% url 'categoria_list' %}">Cancel</a></form>
