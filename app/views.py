@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Item, Categoria, Autor
-from .forms import ItemForm, CategoriaForm, AutorForm
+from .models import Item, Categoria, Autor, Editora
+from .forms import ItemForm, CategoriaForm, AutorForm, EditoraForm
+
 
 ##ITEM
 
@@ -73,8 +74,7 @@ def categoria_delete(request, pk):
         return redirect('categoria_list')
     return render(request, 'app/categoria_confirm_delete.html', {'categoria': categoria})
 
-
-## Categoria [feature/thiago]
+## Autor
 
 def autor_list(request):
     autores = Autor.objects.all()
@@ -107,3 +107,37 @@ def autor_delete(request, pk):
         Autor.delete()
         return redirect('autor_list')
     return render(request, 'app/autor_confirm_delete.html', {'autor': autor})
+
+## Editora [feature/andre]
+
+def editora_list(request):
+    editoras = Editora.objects.all()
+    return render(request, 'app/editora_list.html', {'editoras': editoras})
+
+def editora_create(request):
+    if request.method == 'POST':
+        form = EditoraForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('editora_list')
+    else:
+        form = EditoraForm()
+    return render(request, 'app/editora_form.html', {'form': form})
+
+def editora_update(request, pk):
+    editora = get_object_or_404(Editora, pk=pk)
+    if request.method == 'POST':
+        form = EditoraForm(request.POST, instance=editora)
+        if form.is_valid():
+            form.save()
+            return redirect('editora_list')
+    else:
+        form = EditoraForm(instance=editora)
+    return render(request, 'app/editora_form.html', {'form': form})
+
+def editora_delete(request, pk):
+    editora = get_object_or_404(Editora, pk=pk)
+    if request.method == 'POST':
+        editora.delete()
+        return redirect('editora_list')
+    return render(request, 'app/editora_confirm_delete.html', {'editora': editora})
