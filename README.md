@@ -62,9 +62,9 @@ http://127.0.0.1:8000/
 
 ## Equipe
 
-- **Nome da equipe**: ______________________
-- **Tech Leader**: ______________________
-- **Dev1**: ______________________
-- **Dev2**: ______________________
-- **Dev3**: ______________________
+- **Nome da equipe**: equipe
+- **Tech Leader**: giuliana
+- **Dev1**: thiago
+- **Dev2**: yasmim
+- **Dev3**: andré
 
