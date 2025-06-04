@@ -1,0 +1,79 @@
+name: CI/CD Workflow
+
+# Dispara para Pull Requests em develop e master
+on:
+  pull_request:
+    branches:
+      - develop
+      - master
+
+jobs:
+  # Job de Testes: só roda quando o PR tiver base em 'develop'
+  test:
+    if: github.event.pull_request.base.ref == 'develop'
+    runs-on: ubuntu-latest
+    steps:
+      # 1) Faz checkout do código
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 2) (Exemplo) Configura ambiente Python (troque conforme sua stack)
+      - name: Setup Python 3.x
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      # 3) Instala dependências (ajuste para requirements.txt, package.json, pom.xml etc.)
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      # 4) Executa suite de testes
+      - name: Run tests
+        run: |
+          pytest   # ou: npm test / mvn test / dotnet test, dependendo da sua stack
+  
+
+  # Job de Build & Deploy: só roda quando o PR tiver base em 'master'
+  build-and-deploy:
+    if: github.event.pull_request.base.ref == 'main'
+    runs-on: ubuntu-latest
+    steps:
+      # 1) Faz checkout do código
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 2) (Exemplo) Configura Node.js (substitua se usar outra stack)
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      # 3) Instala dependências e faz build
+      - name: Install and Build
+        run: |
+          npm install
+          npm run build
+
+      # 4) (Opcional) Exemplo de publicação de artefato de build
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-output
+          path: |
+            dist/
+            build/
+
+      # 5) Deploy (simulado) — substitua pelos seus scripts de deploy
+      - name: Deploy to Staging
+        run: |
+          echo "Deploying to staging environment..."
+          # Exemplo real: scp -r ./dist user@server:/var/www/app
+          # ou: kubectl apply -f k8s/deployment.yaml
+          # ou: aws s3 sync ./dist s3://meu-bucket/
+
+      # 6) Notificação ou step extra de pós-deploy (opcional)
+      - name: Post-Deploy Notification
+        if: success()
+        run: |
+          echo "Deploy finalizado com sucesso!"
